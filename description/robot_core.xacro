@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
-
+  <xacro:include filename="inertial_macros.xacro"/>
 
 <!-- Define robot constants -->
   <xacro:property name="base_width" value="0.241"/>
@@ -16,6 +16,17 @@
 
 <!-- Robot Base -->
   <link name="base_link">
+    
+  </link>
+
+<!-- Robot Chassis-->
+ <joint name="chassis_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="chassis"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+
+  <link name="chassis">
     <visual>
       <geometry>
         <box size="${base_length} ${base_width} ${base_height}"/>
@@ -29,8 +40,15 @@
         <box size="${base_length} ${base_width} ${base_height}"/>
       </geometry>
     </collision>
+    <xacro:inertial_box mass="3" x="${base_length}" y=" ${base_width}" z=" ${base_height}">
+      <origin xyz= "0 0 0" rpy="0 0 0"/>
+    </xacro:inertial_box> 
   </link>
-  
+
+  <gazebo reference="chassis">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+
 <!-- Robot Footprint -->
   <link name="base_footprint"/>
 
@@ -58,19 +76,26 @@
 	    </material>
     </visual>
     <visual>
-        <geometry>
-      <cylinder radius="0.0508" length="0.041"/>
-        </geometry>
-        <material name="red">
-          <color rgba=" 1 0 0 1" />
-        </material>
+      <geometry>
+        <cylinder radius="0.0508" length="0.041"/>
+      </geometry>
+      <material name="red">
+        <color rgba=" 1 0 0 1" />
+      </material>
     </visual>
     <collision>
       <geometry>
         <cylinder radius="0.0508" length="0.041"/>
       </geometry>
     </collision>
+    <xacro:inertial_cylinder mass="0.1" length="0.041" radius="0.0508">
+      <origin xyz="0 0 0.1" rpy="0 0 0"/>
+    </xacro:inertial_cylinder>
   </link>
+
+  <gazebo reference="laser_frame">
+    <material>Gazebo/Red</material>
+  </gazebo>
  
  <!-- Wheels -->
   <xacro:macro name="wheel" params="prefix x_reflect y_reflect">
@@ -98,7 +123,14 @@
           <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
         </geometry>
       </collision>
+      <xacro:inertial_cylinder mass="0.5" radius="${wheel_radius}" length="${wheel_width}">
+        <origin xyz="0 0 0.1" rpy="0 0 0"/>
+      </xacro:inertial_cylinder>
     </link>
+
+    <gazebo reference="${prefix}">
+      <material>Gazebo/Gray</material>
+    </gazebo>
 
   </xacro:macro>
 
