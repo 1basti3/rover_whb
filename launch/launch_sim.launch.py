@@ -36,7 +36,10 @@ def generate_launch_description():
                                    '-entity', 'rover'],
                         output='screen')
 
-
+    rplidar_a2m12 = IncludeLaunchDescription(
+                PythonLaunchDescriptionSource([os.path.join(
+                    get_package_share_directory(package_name), 'launch', 'rplidar_a2m12.launch.py')]),
+                )
 
     # Launch them all!
     return LaunchDescription([
