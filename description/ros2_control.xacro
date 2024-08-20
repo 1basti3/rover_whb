@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:unless value="$(arg sim_mode)">
+        <ros2_control name="realRobot" type="system">
+            <hardware>
+                <plugin>diffdrive_rover/DiffDriveRover</plugin>
+                <param name="drivewhl_l_f">drivewhl_l_f_joint</param>
+                <param name="drivewhl_l_r">drivewhl_l_r_joint</param>
+                <param name="drivewhl_r_f">drivewhl_r_f_joint</param>
+                <param name="drivewhl_l_r">drivewhl_l_r_joint</param>
+                <param name="device">/dev/ttyUSB1</param>
+                <param name="baud_rate">9600</param>
+                <param name="timeout_ms">1000</param>
+                <param name="enc_count_per_rev">12</param>
+            </hardware>
+
+
+            <joint name="drivewhl_l_f_joint" >
+                <command_interface name="velocity">
+                    <params name="min"> -1.4 </params>
+                    <params name="max"> 1.4 </params>
+                </command_interface>
+                <state_interface name="position"/>
+                <state_interface name="velocity"/>
+            </joint>
+            <joint name="drivewhl_l_r_joint" >
+                <command_interface name="velocity">
+                    <params name="min"> -1.4 </params>
+                    <params name="max"> 1.4 </params>
+                </command_interface>
+                <state_interface name="position"/>
+                <state_interface name="velocity"/>
+            </joint>
+            <joint name="drivewhl_r_f_joint" >
+                <command_interface name="velocity">
+                    <params name="min"> -1.4 </params>
+                    <params name="max"> 1.4 </params>
+                </command_interface>
+                <state_interface name="position"/>
+                <state_interface name="velocity"/>
+            </joint>
+            <joint name="drivewhl_r_r_joint" >
+                <command_interface name="velocity">
+                    <params name="min"> -1.4 </params>
+                    <params name="max"> 1.4 </params>
+                </command_interface>
+                <state_interface name="position"/>
+                <state_interface name="velocity"/>
+            </joint>
+        </ros2_control>
+    </xacro:unless>
+
+    <xacro:if value="$(arg sim_mode)">
+        <ros2_control name="System" type="system">
+            <hardware>
+                <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+            </hardware>
+            <joint name="drivewhl_l_f_joint" >
+                <command_interface name="velocity">
+                    <params name="min"> -1.4 </params>
+                    <params name="max"> 1.4 </params>
+                </command_interface>
+                <state_interface name="position"/>
+                <state_interface name="velocity"/>
+            </joint>
+            <joint name="drivewhl_l_r_joint" >
+                <command_interface name="velocity">
+                    <params name="min"> -1.4 </params>
+                    <params name="max"> 1.4 </params>
+                </command_interface>
+                <state_interface name="position"/>
+                <state_interface name="velocity"/>
+            </joint>
+            <joint name="drivewhl_r_f_joint" >
+                <command_interface name="velocity">
+                    <params name="min"> -1.4 </params>
+                    <params name="max"> 1.4 </params>
+                </command_interface>
+                <state_interface name="position"/>
+                <state_interface name="velocity"/>
+            </joint>
+            <joint name="drivewhl_r_r_joint" >
+                <command_interface name="velocity">
+                    <params name="min"> -1.4 </params>
+                    <params name="max"> 1.4 </params>
+                </command_interface>
+                <state_interface name="position"/>
+                <state_interface name="velocity"/>
+            </joint>
+        </ros2_control>
+    </xacro:if>
+
+    <gazebo>
+        <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
+            <parameters>$(find rover_whb)/config/my_controllers.yaml</parameters>
+            <parameters>$(find rover_whb)/config/gaz_ros2_contol_use_sim.yaml</parameters>
+        </plugin>
+    </gazebo>
+
+    
+
+
+</robot>
+

@@ -7,11 +7,12 @@ msg = """
 Control Your Rover!
 ---------------------------
 Moving around:
-        w
+        w       r
    a    s    d
         x
 w/x : increase/decrease linear velocity 
 a/d : increase/decrease angular velocity 
+r   : set only angular velocity to 0
 
 space key, s : force stop
 
@@ -108,6 +109,12 @@ def main(args=None):
                 target_angular_vel  = 0.0
                 control_angular_vel = 0.0
                 print(vels(target_linear_vel, target_angular_vel))
+            elif key == 'r' :
+                target_linear_vel = checkLinearLimitVelocity(target_linear_vel) 
+                target_angular_vel  = 0.0
+                control_angular_vel = 0.0
+                status = status + 1
+                print(vels(target_linear_vel, target_angular_vel))    
             else:
                 if (key == '\x03'):
                     break
