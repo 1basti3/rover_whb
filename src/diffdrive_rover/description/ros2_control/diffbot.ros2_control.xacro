@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="diffbot_ros2_control" params="name prefix">
+
+    <ros2_control name="${name}" type="system">
+      <hardware>
+        <plugin>diffdrive_rover/DiffDriveRoverHardware</plugin>
+        <param name="dirvewhl_l_f">dirvewhl_l_f_joint</param>
+        <param name="dirvewhl_l_r">dirvewhl_l_r_joint</param>
+        <param name="dirvewhl_r_f">dirvewhl_r_f_joint</param>
+        <param name="dirvewhl_r_r">dirvewhl_r_r_joint</param>
+
+        <param name="device">/dev/ttyUSB1</param>
+        <param name="timeout_ms">1000</param>
+        <param name="enc_counts_per_rev">12</param>
+      </hardware>
+      <joint name="${prefix}dirvewhl_l_f_joint">
+        <command_interface name="velocity"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+      <joint name="${prefix}dirvewhl_l_r_joint">
+        <command_interface name="velocity"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+      <joint name="${prefix}dirvewhl_r_f_joint">
+        <command_interface name="velocity"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+      <joint name="${prefix}dirvewhl_r_r_joint">
+        <command_interface name="velocity"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+    </ros2_control>
+
+  </xacro:macro>
+
+</robot>
